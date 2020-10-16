@@ -1,4 +1,6 @@
 const express = require('express')
+const favicon = require('serve-favicon')
+const path = require('path')
 
 // Express app
 const app = express()
@@ -13,22 +15,28 @@ app.listen(port, () => {
 	console.log('Listening on port ' + port)
 })
 
+// Static files
+app.use(express.static(path.join(__dirname, 'public')))
+
+// Favicon
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+
 // Routes
 app.get('/', (req, res) => {
 	// Posts
 	const posts = [
-		// {
-		// 	title: 'Yoshi finds eggs',
-		// 	body: 'Lorem ipsum dolor sit amet consectetur',
-		// },
-		// {
-		// 	title: 'Mario finds stars',
-		// 	body: 'Lorem ipsum dolor sit amet consectetur',
-		// },
-		// {
-		// 	title: 'How to defeat bowser',
-		// 	body: 'Lorem ipsum dolor sit amet consectetur',
-		// },
+		{
+			title: 'Yoshi finds eggs',
+			body: 'Lorem ipsum dolor sit amet consectetur',
+		},
+		{
+			title: 'Mario finds stars',
+			body: 'Lorem ipsum dolor sit amet consectetur',
+		},
+		{
+			title: 'How to defeat bowser',
+			body: 'Lorem ipsum dolor sit amet consectetur',
+		},
 	]
 
 	res.render('index', { title: 'Home', posts })
