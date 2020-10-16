@@ -1,23 +1,24 @@
 {
-	"name": "mongo-crud",
+	"name": "node-mongo-crud",
 	"version": "1.0.0",
 	"description": "",
-	"main": "server.js",
+	"main": "app.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node server.js"
+		"start": "node app.js"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/MaximilianHagelstam/node-mongo-crud.git"
 	},
-	"author": "",
-	"license": "ISC",
+	"author": "Maximilian Hagelstam",
+	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/MaximilianHagelstam/node-mongo-crud/issues"
 	},
 	"homepage": "https://github.com/MaximilianHagelstam/node-mongo-crud#readme",
 	"dependencies": {
+		"ejs": "^3.1.5",
 		"express": "^4.17.1"
 	}
 }

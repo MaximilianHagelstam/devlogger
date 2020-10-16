@@ -1,0 +1,44 @@
+<html lang="en">
+	<%- include("./partials/head.ejs") %>
+
+	<body>
+		<%- include("./partials/nav.ejs") %>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<!-- Title -->
+					<div class="pricing-header py-3 pt-md-5 pb-md-4 mx-auto">
+						<h1 class="display-4">Create post</h1>
+					</div>
+
+					<form action="" method="POST">
+						<!-- Name input -->
+						<div class="form-group has-error">
+							<label for="name">Name </label>
+							<input type="text" class="form-control" name="name" />
+						</div>
+
+						<!-- Text body input -->
+						<div class="form-group">
+							<label for="composition">Text body</label>
+							<textarea
+								rows="5"
+								class="form-control"
+								name="composition"
+							></textarea>
+						</div>
+
+						<!-- Create and cancel button -->
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary">Create</button>
+							<button class="btn btn-default">Cancel</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<%- include("./partials/footer.ejs") %>
+	</body>
+</html>
