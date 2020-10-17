@@ -9,7 +9,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/MaximilianHagelstam/node-mongo-crud.git"
+		"url": "git+https://github.com/MaximilianHagelstam/devlogger.git"
 	},
 	"author": "Maximilian Hagelstam",
 	"license": "MIT",

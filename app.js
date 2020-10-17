@@ -3,6 +3,7 @@ const favicon = require('serve-favicon')
 const path = require('path')
 const mongoose = require('mongoose')
 const Log = require('./models/log')
+const logRoutes = require('./routes/logRoutes')
 
 // Express app
 const app = express()
@@ -40,33 +41,6 @@ app.use(express.urlencoded())
 // Favicon
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
-// Create log test
-app.get('/test-add-log', (req, res) => {
-	const log = new Log({
-		title: 'Test title 2',
-		body: 'Test body 2',
-	})
-
-	log
-		.save()
-		.then((result) => {
-			res.redirect('/logs')
-		})
-		.catch((err) => {
-			console.log(err)
-		})
-})
-
-app.get('/test-all-logs', (req, res) => {
-	Log.find()
-		.then((result) => {
-			res.send(result)
-		})
-		.catch((err) => {
-			console.log(err)
-		})
-})
-
 // Routes
 app.get('/', (req, res) => {
 	res.redirect('/logs')
@@ -81,34 +55,7 @@ app.get('/signin', (req, res) => {
 })
 
 // Log routes
-app.get('/logs', (req, res) => {
-	Log.find()
-		.sort({ createdAt: -1 })
-		.then((result) => {
-			res.render('index', { title: 'All Logs', logs: result })
-		})
-		.catch((err) => {
-			console.log(err)
-		})
-})
-
-// Add log post request handler
-app.post('/logs', (req, res) => {
-	const log = new Log(req.body)
-
-	log
-		.save()
-		.then((result) => {
-			res.redirect('/logs')
-		})
-		.catch((err) => {
-			console.log(err)
-		})
-})
-
-app.get('/logs/add', (req, res) => {
-	res.render('add', { title: 'Add log' })
-})
+app.use('/logs', logRoutes)
 
 // Redirects
 app.get('/about-us', (req, res) => {
