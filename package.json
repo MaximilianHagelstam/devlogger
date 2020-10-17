@@ -1,5 +1,5 @@
 {
-	"name": "node-mongo-crud",
+	"name": "devlogger",
 	"version": "1.0.0",
 	"description": "",
 	"main": "app.js",
@@ -14,12 +14,13 @@
 	"author": "Maximilian Hagelstam",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/MaximilianHagelstam/node-mongo-crud/issues"
+		"url": "https://github.com/MaximilianHagelstam/devlogger/issues"
 	},
-	"homepage": "https://github.com/MaximilianHagelstam/node-mongo-crud#readme",
+	"homepage": "https://github.com/MaximilianHagelstam/devlogger#readme",
 	"dependencies": {
 		"ejs": "^3.1.5",
 		"express": "^4.17.1",
+		"mongoose": "^5.10.9",
 		"path": "^0.12.7",
 		"serve-favicon": "^2.5.0"
 	}

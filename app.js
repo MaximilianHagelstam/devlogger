@@ -1,19 +1,34 @@
 const express = require('express')
 const favicon = require('serve-favicon')
 const path = require('path')
+const mongoose = require('mongoose')
+const Log = require('./models/log')
 
 // Express app
 const app = express()
 
-// Register view engine
-app.set('view engine', 'ejs')
-
+// Port number
 const port = 3000
 
-// Listen for requests
-app.listen(port, () => {
-	console.log('Listening on port ' + port)
-})
+// Connect to MongoDB
+const dbURI =
+	'mongodb+srv://<username>:<password>@cluster0.u07gj.mongodb.net/<database>?retryWrites=true&w=majority'
+mongoose
+	.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+	.then(() => {
+		console.log('Connected to db')
+
+		// Listen for requests
+		app.listen(port, () => {
+			console.log('Listening on port ' + port)
+		})
+	})
+	.catch((err) => {
+		console.log(err)
+	})
+
+// Register view engine
+app.set('view engine', 'ejs')
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')))
@@ -21,37 +36,60 @@ app.use(express.static(path.join(__dirname, 'public')))
 // Favicon
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
+// Create log test
+app.get('/test-add-log', (req, res) => {
+	const log = new Log({
+		title: 'Test title 2',
+		body: 'Test body 2',
+	})
+
+	log
+		.save()
+		.then((result) => {
+			res.redirect('/logs')
+		})
+		.catch((err) => {
+			console.log(err)
+		})
+})
+
+app.get('/test-all-logs', (req, res) => {
+	Log.find()
+		.then((result) => {
+			res.send(result)
+		})
+		.catch((err) => {
+			console.log(err)
+		})
+})
+
 // Routes
 app.get('/', (req, res) => {
-	// Posts
-	const posts = [
-		{
-			title: 'Yoshi finds eggs',
-			body: 'Lorem ipsum dolor sit amet consectetur',
-		},
-		{
-			title: 'Mario finds stars',
-			body: 'Lorem ipsum dolor sit amet consectetur',
-		},
-		{
-			title: 'How to defeat bowser',
-			body: 'Lorem ipsum dolor sit amet consectetur',
-		},
-	]
-
-	res.render('index', { title: 'Home', posts })
+	res.redirect('/logs')
 })
 
 app.get('/about', (req, res) => {
 	res.render('about', { title: 'About' })
 })
 
-app.get('/compose', (req, res) => {
-	res.render('compose', { title: 'Compose' })
-})
-
 app.get('/signin', (req, res) => {
 	res.render('signin', { title: 'Sign in' })
+})
+
+// Log routes
+app.get('/logs', (req, res) => {
+	Log.find()
+		.sort({ createdAt: -1 })
+		.then((result) => {
+			res.render('index', { title: 'All Logs', logs: result })
+		})
+		.catch((err) => {
+			console.log(err)
+		})
+})
+
+app.get('/add-log', (req, res) => {
+	res.render('add-log', { title: 'Add log' })
 })
 
 // Redirects

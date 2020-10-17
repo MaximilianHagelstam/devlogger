@@ -6,12 +6,12 @@
 
 		<main role="main" class="container">
 			<div class="my-3 p-3 bg-white rounded shadow-sm">
-				<h6 class="border-bottom border-gray pb-2 mb-0">Posts</h6>
+				<h6 class="border-bottom border-gray pb-2 mb-0">All Logs</h6>
 
-				<% if (posts.length > 0) { %> <% posts.forEach(post => { %>
+				<% if (logs.length > 0) { %> <% logs.forEach(log => { %>
 				<!-- Creates div for every post -->
 				<div class="media text-muted pt-3">
-					<!-- Blu rextangle -->
+					<!-- Blue rextangle -->
 					<svg
 						class="bd-placeholder-img mr-2 rounded"
 						width="32"
@@ -28,16 +28,16 @@
 					<p
 						class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
 					>
-						<!-- Post title -->
-						<strong class="d-block text-gray-dark"><%= post.title %></strong>
-						<!-- Post body -->
-						<%= post.body %>
+						<!-- Log title -->
+						<strong class="d-block text-gray-dark"><%= log.title %></strong>
+						<!-- Log body -->
+						<%= log.body %>
 					</p>
 				</div>
 				<!-- Closing for each function and opening else statement -->
 				<% }) %> <% } else { %>
-				<!-- Displays when there are no posts -->
-				<p>There are no posts to display...</p>
+				<!-- Displays when there are no logs -->
+				<p>There are no logs to display...</p>
 				<% } %>
 			</div>
 		</main>
