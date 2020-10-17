@@ -12,27 +12,32 @@
 						<h1 class="display-4">Add log</h1>
 					</div>
 
-					<form action="" method="POST">
+					<form action="/logs" method="POST">
 						<!-- Title input -->
 						<div class="form-group has-error">
-							<label for="name">Title </label>
-							<input type="text" class="form-control" name="name" />
+							<label for="name">Title</label>
+							<input type="text" class="form-control" name="title" id="title" />
 						</div>
 
 						<!-- Body input -->
 						<div class="form-group">
 							<label for="composition">Body</label>
 							<textarea
+								type="text"
 								rows="5"
 								class="form-control"
-								name="composition"
+								name="body"
+								id="body"
 							></textarea>
 						</div>
 
 						<!-- Create and cancel button -->
 						<div class="form-group">
-							<button type="submit" class="btn btn-primary">Submit</button>
-							<button class="btn btn-default">Cancel</button>
+							<!-- <button type="submit" class="btn btn-primary">Submit</button>
+							<button class="btn btn-default">Cancel</button> -->
+
+							<button class="btn btn-primary">Submit</button>
+							<button class="btn btn-light">Cancel</button>
 						</div>
 					</form>
 				</div>

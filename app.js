@@ -13,6 +13,7 @@ const port = 3000
 // Connect to MongoDB
 const dbURI =
 	'mongodb+srv://<username>:<password>@cluster0.u07gj.mongodb.net/<database>?retryWrites=true&w=majority'
+
 mongoose
 	.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => {
@@ -32,6 +33,9 @@ app.set('view engine', 'ejs')
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')))
+
+// Middleware
+app.use(express.urlencoded())
 
 // Favicon
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
@@ -88,8 +92,22 @@ app.get('/logs', (req, res) => {
 		})
 })
 
-app.get('/add-log', (req, res) => {
-	res.render('add-log', { title: 'Add log' })
+// Add log post request handler
+app.post('/logs', (req, res) => {
+	const log = new Log(req.body)
+
+	log
+		.save()
+		.then((result) => {
+			res.redirect('/logs')
+		})
+		.catch((err) => {
+			console.log(err)
+		})
+})
+
+app.get('/logs/add', (req, res) => {
+	res.render('add', { title: 'Add log' })
 })
 
 // Redirects
