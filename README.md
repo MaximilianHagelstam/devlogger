@@ -2,11 +2,17 @@
 
 ### How to run:
 
-- have git installed
-- open command line
-- go to directory of where you want the project to be (cd)
-- type "git commit https://github.com/MaximilianHagelstam/devlogger.git"
-- go to project folder (cd)
-- type "npm install" (make sure you have node installed)
-- type node app
-- type "localhost:3000" in browser url
+- install [git](https://git-scm.com/downloads) and [node](https://nodejs.org)
+- open terminal
+- run "git commit https://github.com/MaximilianHagelstam/devlogger.git"
+- open project folder in terminal
+- run "npm install"
+- run "node app"
+- open "localhost:3000" in browser
+
+### Technology stack:
+
+- Node JS
+- Express JS
+- Mongo DB
+- Bootstrap
