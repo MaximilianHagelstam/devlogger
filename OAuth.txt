@@ -1,5 +1,0 @@
-DB: mongodb+srv://maximilian-hagelstam:rSDWUV6VnMn7zP@cluster0.u07gj.mongodb.net/devlogger-db?retryWrites=true&w=majority
-
-clientID: 149810761718-elqa75ebc5vml55e186nu81j2j5slur9.apps.googleusercontent.com
-
-clientSecret: iaLT81oAzVKJiBF8lRRc-7vv
