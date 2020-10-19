@@ -1,13 +1,14 @@
 const express = require('express')
 const favicon = require('serve-favicon')
 const path = require('path')
-const mongoose = require('mongoose')
-const Log = require('./models/log')
-const logRoutes = require('./routes/logRoutes')
 const passport = require('passport')
 const cookieSession = require('cookie-session')
-const { isNullOrUndefined } = require('util')
-require('./passport-setup')
+const dotenv = require('dotenv')
+
+const logRoutes = require('./routes/logRoutes')
+const Log = require('./models/log')
+const connectDB = require('./config/db')
+require('./config/passport')
 
 // Express app
 const app = express()
@@ -16,22 +17,7 @@ const app = express()
 const port = 3000
 
 // Connect to MongoDB
-const dbURI =
-	'mongodb+srv://<username>:<password>@cluster0.u07gj.mongodb.net/<database>?retryWrites=true&w=majority'
-
-mongoose
-	.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-	.then(() => {
-		console.log('Connected to db')
-
-		// Listen for requests
-		app.listen(port, () => {
-			console.log('Listening on port ' + port)
-		})
-	})
-	.catch((err) => {
-		console.log(err)
-	})
+connectDB()
 
 // Register view engine
 app.set('view engine', 'ejs')
@@ -119,4 +105,9 @@ app.get('/logout', (req, res) => {
 // 404
 app.use((req, res) => {
 	res.status(404).render('404', { title: 'Page not found' })
+})
+
+// Listen for requests
+app.listen(port, () => {
+	console.log('Listening on port ' + port)
 })
