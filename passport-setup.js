@@ -15,7 +15,7 @@ passport.use(
 	new GoogleStrategy(
 		{
 			clientID: CLIENT_ID,
-			clientSecret: CLIENTSECRET,
+			clientSecret: CLIENT_SECRET,
 			callbackURL: 'http://localhost:3000/google/callback',
 		},
 		(accessToken, refreshToken, profile, done) => {
