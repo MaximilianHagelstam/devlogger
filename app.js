@@ -1,20 +1,25 @@
 const express = require('express')
-const favicon = require('serve-favicon')
 const path = require('path')
 const passport = require('passport')
-const cookieSession = require('cookie-session')
 const dotenv = require('dotenv')
+const cookieSession = require('cookie-session')
+const favicon = require('serve-favicon')
 
 const logRoutes = require('./routes/logRoutes')
 const Log = require('./models/log')
 const connectDB = require('./config/db')
+
+// Load config
+dotenv.config({ path: './config/config.env' })
+
+// Passport config
 require('./config/passport')
 
 // Express app
 const app = express()
 
 // Port number
-const port = 3000
+const PORT = process.env.PORT
 
 // Connect to MongoDB
 connectDB()
@@ -108,6 +113,6 @@ app.use((req, res) => {
 })
 
 // Listen for requests
-app.listen(port, () => {
-	console.log('Listening on port ' + port)
+app.listen(PORT, () => {
+	console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}`)
 })
