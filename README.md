@@ -27,5 +27,5 @@
 - MongoDB
 - Mongoose
 - Bootstrap
-- Oath 2.0
+- Oath 2
 - Passport js
