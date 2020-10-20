@@ -67,7 +67,15 @@ app.get('/signin', (req, res) => {
 })
 
 app.get('/profile', (req, res) => {
-	res.render('profile', { title: 'Profile', displayName: req.user.displayName })
+	// View profile only if our are signed in
+	try {
+		res.render('profile', {
+			title: 'Profile',
+			displayName: req.user.displayName,
+		})
+	} catch (err) {
+		res.status(404).render('404', { title: 'Page not found' })
+	}
 })
 
 // Log route
