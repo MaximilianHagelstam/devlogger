@@ -66,6 +66,10 @@ app.get('/signin', (req, res) => {
 	res.render('signin', { title: 'Sign in' })
 })
 
+app.get('/profile', (req, res) => {
+	res.render('profile', { title: 'Profile', displayName: req.user.displayName })
+})
+
 // Log route
 app.use('/logs', logRoutes)
 
@@ -86,20 +90,12 @@ app.get(
 
 app.get(
 	'/google/callback',
-	passport.authenticate('google', { failureRedirect: '/failed' }),
+	passport.authenticate('google', { failureRedirect: '/google' }),
 	(req, res) => {
 		// Successful authentication, redirect home.
-		res.redirect('/good')
+		res.redirect('/profile')
 	}
 )
-
-app.get('/failed', (req, res) => {
-	res.send('You failed to login!')
-})
-
-app.get('/good', isLoggedIn, (req, res) => {
-	res.send('Welcome mr ' + req.user.displayName + '!')
-})
 
 app.get('/logout', (req, res) => {
 	req.session = null
