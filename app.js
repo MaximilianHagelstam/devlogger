@@ -5,8 +5,8 @@ const dotenv = require('dotenv')
 const cookieSession = require('cookie-session')
 const favicon = require('serve-favicon')
 
-const logRoutes = require('./routes/logRoutes')
-const Log = require('./models/log')
+const logRoutes = require('./routes/log')
+const Log = require('./models/Log')
 const connectDB = require('./config/db')
 
 // Load config

@@ -1,4 +1,4 @@
-const Log = require('../models/log')
+const Log = require('../models/Log')
 
 // All logs in an array
 const log_index = (req, res) => {
