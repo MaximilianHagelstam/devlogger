@@ -2,18 +2,19 @@ const express = require('express')
 const path = require('path')
 const passport = require('passport')
 const dotenv = require('dotenv')
-const cookieSession = require('cookie-session')
 const favicon = require('serve-favicon')
-
-const logRoutes = require('./routes/log')
-const Log = require('./models/Log')
+const mongoose = require('mongoose')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
+const logRoutes = require('./routes/logRoutes')
+const Log = require('./models/log')
 const connectDB = require('./config/db')
 
 // Load config
 dotenv.config({ path: './config/config.env' })
 
 // Passport config
-require('./config/passport')
+require('./config/passport')(passport)
 
 // Express app
 const app = express()
@@ -27,28 +28,19 @@ connectDB()
 // Register view engine
 app.set('view engine', 'ejs')
 
-// Static files
-app.use(express.static(path.join(__dirname, 'public')))
-
 app.use(
-	cookieSession({
-		name: 'devlogger-session',
-		keys: ['key1', 'key2'],
+	session({
+		secret: 'keyboard cat',
+		resave: false,
+		saveUninitialized: false,
+		store: new MongoStore({ mongooseConnection: mongoose.connection }),
 	})
 )
 
-const isLoggedIn = (req, res, next) => {
-	if (req.user) {
-		next()
-	} else {
-		res.sendStatus(401)
-	}
-}
-
-// Middleware
-app.use(express.urlencoded())
+// Passport middleware
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(express.urlencoded())
 
 // Favicon
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
@@ -90,23 +82,21 @@ app.get('/home', (req, res) => {
 	res.redirect('/logs')
 })
 
-// Oauth 2.0 routes
-app.get(
-	'/google',
-	passport.authenticate('google', { scope: ['profile', 'email'] })
-)
+app.get('/google', passport.authenticate('google', { scope: ['profile'] }))
 
+// @desc    Google auth callback
+// @route   GET /auth/google/callback
 app.get(
 	'/google/callback',
-	passport.authenticate('google', { failureRedirect: '/google' }),
+	passport.authenticate('google', { failureRedirect: '/' }),
 	(req, res) => {
-		// Successful authentication, redirect home.
 		res.redirect('/profile')
 	}
 )
 
+// @desc    Logout user
+// @route   /auth/logout
 app.get('/logout', (req, res) => {
-	req.session = null
 	req.logout()
 	res.redirect('/')
 })
