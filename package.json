@@ -18,9 +18,14 @@
 	},
 	"homepage": "https://github.com/MaximilianHagelstam/devlogger#readme",
 	"dependencies": {
+		"connect-mongo": "^3.2.0",
+		"dotenv": "^8.2.0",
 		"ejs": "^3.1.5",
 		"express": "^4.17.1",
+		"express-session": "^1.17.1",
 		"mongoose": "^5.10.9",
+		"passport": "^0.4.1",
+		"passport-google-oauth20": "^2.0.0",
 		"path": "^0.12.7",
 		"serve-favicon": "^2.5.0"
 	}

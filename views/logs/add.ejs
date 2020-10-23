@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 	<%- include("../partials/head.ejs") %>
 
@@ -16,7 +17,13 @@
 						<!-- Title input -->
 						<div class="form-group has-error">
 							<label for="name">Title</label>
-							<input type="text" class="form-control" name="title" id="title" />
+							<input
+								type="text"
+								class="form-control"
+								name="title"
+								id="title"
+								required
+							/>
 						</div>
 
 						<!-- Body input -->
@@ -28,6 +35,7 @@
 								class="form-control"
 								name="body"
 								id="body"
+								required
 							></textarea>
 						</div>
 

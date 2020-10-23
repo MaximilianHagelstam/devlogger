@@ -1,72 +1,65 @@
 const express = require('express')
-const favicon = require('serve-favicon')
 const path = require('path')
+const passport = require('passport')
+const dotenv = require('dotenv')
+const favicon = require('serve-favicon')
 const mongoose = require('mongoose')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
+
+const log = require('./routes/log')
+const auth = require('./routes/auth')
+const index = require('./routes/index')
 const Log = require('./models/log')
-const logRoutes = require('./routes/logRoutes')
+const connectDB = require('./config/db')
+
+// Load config
+dotenv.config({ path: './config/config.env' })
+
+// Passport config
+require('./config/passport')(passport)
 
 // Express app
 const app = express()
 
 // Port number
-const port = 3000
+const PORT = process.env.PORT
 
 // Connect to MongoDB
-const dbURI =
-	'mongodb+srv://<username>:<password>@cluster0.u07gj.mongodb.net/<database>?retryWrites=true&w=majority'
-
-mongoose
-	.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-	.then(() => {
-		console.log('Connected to db')
-
-		// Listen for requests
-		app.listen(port, () => {
-			console.log('Listening on port ' + port)
-		})
-	})
-	.catch((err) => {
-		console.log(err)
-	})
+connectDB()
 
 // Register view engine
 app.set('view engine', 'ejs')
 
-// Static files
-app.use(express.static(path.join(__dirname, 'public')))
+// Sessions
+app.use(
+	session({
+		secret: 'keyboard cat',
+		resave: false,
+		saveUninitialized: false,
+		store: new MongoStore({ mongooseConnection: mongoose.connection }),
+	})
+)
 
-// Middleware
+// Passport and express middleware
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(express.urlencoded())
 
 // Favicon
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 // Routes
-app.get('/', (req, res) => {
-	res.redirect('/logs')
-})
-
-app.get('/about', (req, res) => {
-	res.render('about', { title: 'About' })
-})
-
-app.get('/signin', (req, res) => {
-	res.render('signin', { title: 'Sign in' })
-})
-
-// Log routes
-app.use('/logs', logRoutes)
-
-// Redirects
-app.get('/about-us', (req, res) => {
-	res.redirect('/about')
-})
-
-app.get('/home', (req, res) => {
-	res.redirect('/')
-})
+app.use('/logs', log)
+app.use('/auth', auth)
+app.use('/', index)
 
 // 404
 app.use((req, res) => {
 	res.status(404).render('404', { title: 'Page not found' })
+})
+
+// Listen for requests
+app.listen(PORT, () => {
+	console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}`)
 })
