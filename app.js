@@ -6,7 +6,10 @@ const favicon = require('serve-favicon')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
-const logRoutes = require('./routes/logRoutes')
+
+const log = require('./routes/log')
+const auth = require('./routes/auth')
+const index = require('./routes/index')
 const Log = require('./models/log')
 const connectDB = require('./config/db')
 
@@ -28,6 +31,7 @@ connectDB()
 // Register view engine
 app.set('view engine', 'ejs')
 
+// Sessions
 app.use(
 	session({
 		secret: 'keyboard cat',
@@ -37,7 +41,7 @@ app.use(
 	})
 )
 
-// Passport middleware
+// Passport and express middleware
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(express.urlencoded())
@@ -46,60 +50,9 @@ app.use(express.urlencoded())
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 // Routes
-app.get('/', (req, res) => {
-	res.redirect('/logs')
-})
-
-app.get('/about', (req, res) => {
-	res.render('about', { title: 'About' })
-})
-
-app.get('/signin', (req, res) => {
-	res.render('signin', { title: 'Sign in' })
-})
-
-app.get('/profile', (req, res) => {
-	// View profile only if our are signed in
-	try {
-		res.render('profile', {
-			title: 'Profile',
-			displayName: req.user.displayName,
-		})
-	} catch (err) {
-		res.status(404).render('404', { title: 'Page not found' })
-	}
-})
-
-// Log route
-app.use('/logs', logRoutes)
-
-// Redirects
-app.get('/about-us', (req, res) => {
-	res.redirect('/about')
-})
-
-app.get('/home', (req, res) => {
-	res.redirect('/logs')
-})
-
-app.get('/google', passport.authenticate('google', { scope: ['profile'] }))
-
-// @desc    Google auth callback
-// @route   GET /auth/google/callback
-app.get(
-	'/google/callback',
-	passport.authenticate('google', { failureRedirect: '/' }),
-	(req, res) => {
-		res.redirect('/profile')
-	}
-)
-
-// @desc    Logout user
-// @route   /auth/logout
-app.get('/logout', (req, res) => {
-	req.logout()
-	res.redirect('/')
-})
+app.use('/logs', log)
+app.use('/auth', auth)
+app.use('/', index)
 
 // 404
 app.use((req, res) => {
