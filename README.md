@@ -33,7 +33,6 @@ Devlogger is an open source, blog-like web application, made for developers to l
 Coming soon...
 
 ## Contributing
-<<<<<<< HEAD
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 How to contribute:
@@ -42,8 +41,6 @@ How to contribute:
 3. Submit Pull Request with comprehensive description of changes
 
 ## Tech
-
-=======
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 How to contribute:
@@ -54,7 +51,6 @@ How to contribute:
 
 ## Tech
 
->>>>>>> auth
 - Node js
 - Express js
 - MongoDB
