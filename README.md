@@ -42,15 +42,6 @@ How to contribute:
 
 ## Tech
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-How to contribute:
-
-1. Clone repo and create a new branch: `git checkout https://github.com/MaximilianHagelstam/devlogger -b name_for_new_branch`.
-2. Make changes and test
-3. Submit Pull Request with comprehensive description of changes
-
-## Tech
-
 - Node js
 - Express js
 - MongoDB
